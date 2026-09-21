@@ -12,6 +12,7 @@
   :root{
     --azul:#0000FF;
     --azul-fosco:#26418F;
+    --verde-livro:#2A6B78;
     --azul-livro:#78C2CF;
     --azul-livro-claro:#E4F2F5;
     --tinta:#0C0C1A;
@@ -117,7 +118,7 @@
   }
 
   .grupo .aviso{margin:-4px 0 12px;font-size:.8rem;color:var(--tinta-suave)}
-  .grupo h3{margin:18px 0 8px;font-size:.92rem;font-weight:700;color:var(--tinta)}
+  .grupo h3{margin:20px 0 8px;font-size:.94rem;font-weight:700;color:var(--verde-livro)}
 
   /* indice de contatos */
   .indice{margin-top:32px;padding-top:26px;border-top:1px solid var(--linha)}
@@ -135,6 +136,18 @@
   .indice a{color:var(--azul-fosco);text-decoration:none;border-bottom:1px solid var(--azul-livro)}
   .indice a:hover{border-bottom-color:var(--azul)}
   .indice a:focus-visible{outline:2px solid var(--azul);outline-offset:2px}
+
+  .curso .fluxo{
+    display:inline-block;
+    margin-top:8px;
+    padding:4px 9px;
+    background:var(--azul-livro-claro);
+    border-radius:3px;
+    font-size:.81rem;
+    font-weight:600;
+    color:var(--verde-livro);
+  }
+  .ficha-fim{margin-top:20px}
 
   /* itens que ainda aguardam o arquivo */
   .link.pendente{cursor:default}
@@ -189,40 +202,39 @@
 
   <section class="grupo">
     <h2>Coordenação de Graduação em Letras — CGLET/CH</h2>
-    <p class="aviso">Setor responsável pelas coordenações de curso, pelo estágio supervisionado e pelos documentos da graduação</p>
-    <div class="ficha">
-      <p>Secretaria: Marciano e Levi</p>
-      <ul>
-        <li><a href="mailto:gradletrasual@gmail.com">gradletrasual@gmail.com</a></li>
-        <li><a href="https://wa.me/558321011036" target="_blank" rel="noopener">(83) 2101-1036 — WhatsApp</a></li>
-      </ul>
-    </div>
+    <p class="aviso">Coordenações e secretaria dos cursos de graduação da UAL/CH</p>
 
     <h3>Cursos, coordenações e fluxogramas</h3>
     <nav class="links" aria-label="Cursos de graduação em Letras">
-      <a class="link" href="arquivos/cursos-de-letras/letras-lingua-espanhola-noturno.pdf" target="_blank" rel="noopener">
+      <a class="link curso" href="arquivos/cursos-de-letras/letras-lingua-espanhola-noturno.pdf" target="_blank" rel="noopener">
         <span class="rotulo">Letras — Língua Espanhola (noturno)</span>
-        <span class="nota">Coordenação: Profa. Lorena · estrutura curricular e fluxograma</span>
+        <span class="nota">Coordenação: Profa. Lorena</span>
+        <span class="fluxo">estrutura curricular e fluxograma</span>
       </a>
-      <a class="link" href="arquivos/cursos-de-letras/letras-lingua-inglesa-diurno.pdf" target="_blank" rel="noopener">
+      <a class="link curso" href="arquivos/cursos-de-letras/letras-lingua-inglesa-diurno.pdf" target="_blank" rel="noopener">
         <span class="rotulo">Letras — Língua Inglesa (diurno)</span>
-        <span class="nota">Coordenação: Prof. Almir · estrutura curricular e fluxograma</span>
+        <span class="nota">Coordenação: Prof. Almir</span>
+        <span class="fluxo">estrutura curricular e fluxograma</span>
       </a>
-      <a class="link" href="arquivos/cursos-de-letras/letras-libras-diurno.pdf" target="_blank" rel="noopener">
+      <a class="link curso" href="arquivos/cursos-de-letras/letras-libras-diurno.pdf" target="_blank" rel="noopener">
         <span class="rotulo">Letras Libras (diurno)</span>
-        <span class="nota">Coordenação: Profa. Girlaine · estrutura curricular e fluxograma</span>
+        <span class="nota">Coordenação: Profa. Girlaine</span>
+        <span class="fluxo">estrutura curricular e fluxograma</span>
       </a>
-      <a class="link" href="arquivos/cursos-de-letras/letras-lingua-portuguesa-diurno.pdf" target="_blank" rel="noopener">
+      <a class="link curso" href="arquivos/cursos-de-letras/letras-lingua-portuguesa-diurno.pdf" target="_blank" rel="noopener">
         <span class="rotulo">Letras — Língua Portuguesa (diurno)</span>
-        <span class="nota">Coordenação: Profa. Maria Marta · estrutura curricular e fluxograma</span>
+        <span class="nota">Coordenação: Profa. Maria Marta</span>
+        <span class="fluxo">estrutura curricular e fluxograma</span>
       </a>
-      <a class="link" href="arquivos/cursos-de-letras/letras-lingua-portuguesa-noturno.pdf" target="_blank" rel="noopener">
+      <a class="link curso" href="arquivos/cursos-de-letras/letras-lingua-portuguesa-noturno.pdf" target="_blank" rel="noopener">
         <span class="rotulo">Letras — Língua Portuguesa (noturno)</span>
-        <span class="nota">Coordenação: Prof. Anderson · estrutura curricular e fluxograma</span>
+        <span class="nota">Coordenação: Prof. Anderson</span>
+        <span class="fluxo">estrutura curricular e fluxograma</span>
       </a>
-      <a class="link" href="arquivos/cursos-de-letras/letras-lingua-portuguesa-e-francesa-diurno.pdf" target="_blank" rel="noopener">
+      <a class="link curso" href="arquivos/cursos-de-letras/letras-lingua-portuguesa-e-francesa-diurno.pdf" target="_blank" rel="noopener">
         <span class="rotulo">Letras — Língua Portuguesa e Língua Francesa (diurno)</span>
-        <span class="nota">Coordenação: Prof. Nyeberth · estrutura curricular e fluxograma</span>
+        <span class="nota">Coordenação: Prof. Nyeberth</span>
+        <span class="fluxo">estrutura curricular e fluxograma</span>
       </a>
     </nav>
 
@@ -237,6 +249,14 @@
         <span class="nota">Concedente, escola, horário e plano de aulas · para preenchimento e entrega</span>
       </a>
     </nav>
+
+    <div class="ficha ficha-fim">
+      <p>Secretaria: Marciano e Levi</p>
+      <ul>
+        <li><a href="mailto:gradletrasual@gmail.com">gradletrasual@gmail.com</a></li>
+        <li><a href="https://wa.me/558321011036" target="_blank" rel="noopener">(83) 2101-1036 — WhatsApp</a></li>
+      </ul>
+    </div>
   </section>
 
   <section class="grupo">
