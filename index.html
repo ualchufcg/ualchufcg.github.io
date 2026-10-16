@@ -137,17 +137,40 @@
   .indice a:hover{border-bottom-color:var(--azul)}
   .indice a:focus-visible{outline:2px solid var(--azul);outline-offset:2px}
 
+  div.link.curso{cursor:default}
+  div.link.curso:hover{border-left-color:var(--azul-livro);background:transparent}
+  .curso .faixas{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
   .curso .fluxo{
     display:inline-block;
-    margin-top:8px;
     padding:4px 9px;
     background:var(--azul-livro-claro);
+    border:1px solid transparent;
     border-radius:3px;
     font-size:.81rem;
     font-weight:600;
     color:var(--verde-livro);
+    text-decoration:none;
   }
+  a.fluxo:hover{border-color:var(--azul-livro)}
+  a.fluxo:focus-visible{outline:2px solid var(--azul);outline-offset:2px}
+  .curso .fluxo.vazio{background:transparent;border-color:var(--linha);color:var(--tinta-suave);font-weight:400}
   .ficha-fim{margin-top:20px}
+
+  .link.encerrado{cursor:default}
+  .link.encerrado:hover{border-left-color:var(--azul-livro);background:transparent}
+  .encerrado .rotulo{color:var(--tinta-suave)}
+  .encerrado .rotulo::after{
+    content:"encerrado";
+    display:inline-block;
+    margin-left:8px;
+    padding:1px 7px;
+    border:1px solid var(--azul-livro);
+    border-radius:3px;
+    font-size:.66rem;
+    font-weight:600;
+    color:var(--tinta-suave);
+    vertical-align:middle;
+  }
 
   /* itens que ainda aguardam o arquivo */
   .link.pendente{cursor:default}
@@ -206,36 +229,54 @@
 
     <h3>Cursos, coordenações e fluxogramas</h3>
     <nav class="links" aria-label="Cursos de graduação em Letras">
-      <a class="link curso" href="arquivos/cursos-de-letras/letras-lingua-espanhola-noturno.pdf" target="_blank" rel="noopener">
+      <div class="link curso">
         <span class="rotulo">Letras — Língua Espanhola (noturno)</span>
         <span class="nota">Coordenação: Profa. Lorena</span>
-        <span class="fluxo">estrutura curricular e fluxograma</span>
-      </a>
-      <a class="link curso" href="arquivos/cursos-de-letras/letras-lingua-inglesa-diurno.pdf" target="_blank" rel="noopener">
+        <span class="faixas">
+          <a class="fluxo" href="arquivos/cursos-de-letras/letras-lingua-espanhola-noturno.pdf" target="_blank" rel="noopener">estrutura curricular e fluxograma</a>
+          <a class="fluxo" href="arquivos/cursos-de-letras/ppc-letras-lingua-espanhola-noturno.pdf" target="_blank" rel="noopener">PPC</a>
+        </span>
+      </div>
+      <div class="link curso">
         <span class="rotulo">Letras — Língua Inglesa (diurno)</span>
         <span class="nota">Coordenação: Prof. Almir</span>
-        <span class="fluxo">estrutura curricular e fluxograma</span>
-      </a>
-      <a class="link curso" href="arquivos/cursos-de-letras/letras-libras-diurno.pdf" target="_blank" rel="noopener">
+        <span class="faixas">
+          <a class="fluxo" href="arquivos/cursos-de-letras/letras-lingua-inglesa-diurno.pdf" target="_blank" rel="noopener">estrutura curricular e fluxograma</a>
+          <a class="fluxo" href="arquivos/cursos-de-letras/ppc-letras-lingua-inglesa-diurno.pdf" target="_blank" rel="noopener">PPC</a>
+        </span>
+      </div>
+      <div class="link curso">
         <span class="rotulo">Letras Libras (diurno)</span>
         <span class="nota">Coordenação: Profa. Girlaine</span>
-        <span class="fluxo">estrutura curricular e fluxograma</span>
-      </a>
-      <a class="link curso" href="arquivos/cursos-de-letras/letras-lingua-portuguesa-diurno.pdf" target="_blank" rel="noopener">
+        <span class="faixas">
+          <a class="fluxo" href="arquivos/cursos-de-letras/letras-libras-diurno.pdf" target="_blank" rel="noopener">estrutura curricular e fluxograma</a>
+          <span class="fluxo vazio">PPC em breve</span>
+        </span>
+      </div>
+      <div class="link curso">
         <span class="rotulo">Letras — Língua Portuguesa (diurno)</span>
         <span class="nota">Coordenação: Profa. Maria Marta</span>
-        <span class="fluxo">estrutura curricular e fluxograma</span>
-      </a>
-      <a class="link curso" href="arquivos/cursos-de-letras/letras-lingua-portuguesa-noturno.pdf" target="_blank" rel="noopener">
+        <span class="faixas">
+          <a class="fluxo" href="arquivos/cursos-de-letras/letras-lingua-portuguesa-diurno.pdf" target="_blank" rel="noopener">estrutura curricular e fluxograma</a>
+          <a class="fluxo" href="arquivos/cursos-de-letras/ppc-letras-lingua-portuguesa-diurno.pdf" target="_blank" rel="noopener">PPC</a>
+        </span>
+      </div>
+      <div class="link curso">
         <span class="rotulo">Letras — Língua Portuguesa (noturno)</span>
         <span class="nota">Coordenação: Prof. Anderson</span>
-        <span class="fluxo">estrutura curricular e fluxograma</span>
-      </a>
-      <a class="link curso" href="arquivos/cursos-de-letras/letras-lingua-portuguesa-e-francesa-diurno.pdf" target="_blank" rel="noopener">
+        <span class="faixas">
+          <a class="fluxo" href="arquivos/cursos-de-letras/letras-lingua-portuguesa-noturno.pdf" target="_blank" rel="noopener">estrutura curricular e fluxograma</a>
+          <a class="fluxo" href="arquivos/cursos-de-letras/ppc-letras-lingua-portuguesa-noturno.pdf" target="_blank" rel="noopener">PPC</a>
+        </span>
+      </div>
+      <div class="link curso">
         <span class="rotulo">Letras — Língua Portuguesa e Língua Francesa (diurno)</span>
         <span class="nota">Coordenação: Prof. Nyeberth</span>
-        <span class="fluxo">estrutura curricular e fluxograma</span>
-      </a>
+        <span class="faixas">
+          <a class="fluxo" href="arquivos/cursos-de-letras/letras-lingua-portuguesa-e-francesa-diurno.pdf" target="_blank" rel="noopener">estrutura curricular e fluxograma</a>
+          <a class="fluxo" href="arquivos/cursos-de-letras/ppc-letras-lingua-portuguesa-e-francesa-diurno.pdf" target="_blank" rel="noopener">PPC</a>
+        </span>
+      </div>
     </nav>
 
     <div class="ficha ficha-fim">
@@ -401,7 +442,7 @@
     <nav class="links" aria-label="Proficiência 2026: resultado e certificados">
       <span class="link pendente">
         <span class="rotulo">Homologação do resultado final</span>
-        <span class="nota">Prevista para 30 de setembro · recursos de 1 a 2 de outubro</span>
+        <span class="nota">Prevista para 30 de setembro · aguardando o arquivo</span>
       </span>
       <span class="link pendente">
         <span class="rotulo">Certificados de aprovação</span>
@@ -409,23 +450,22 @@
       </span>
     </nav>
 
-    <h3>Cursos de Extensão — Francês I</h3>
     <nav class="links" aria-label="Curso de Extensão em Francês I">
       <a class="link" href="arquivos/central-de-linguas/cursos-de-extensao/frances-1/regras/regras-curso-frances-i.pdf" target="_blank" rel="noopener">
         <span class="rotulo">Regras de participação</span>
         <span class="nota">48 horas · 30 vagas · Prof. Dr. Wescley Batista Lopes · aulas de 29/09 a 18/12</span>
       </a>
-      <a class="link" href="https://forms.gle/dioYsLWngun6WvQB6" target="_blank" rel="noopener">
-        <span class="rotulo">Inscreva-se</span>
-        <span class="nota">De 23 de setembro (8h) a 25 de setembro (23h59) · formulário do Google</span>
+      <a class="link" href="arquivos/central-de-linguas/cursos-de-extensao/frances-1/resultados/resultado-das-inscricoes-frances-i.pdf" target="_blank" rel="noopener">
+        <span class="rotulo">Resultado das inscrições</span>
+        <span class="nota">Os 30 selecionados, horários e sala · 28 de setembro</span>
       </a>
-      <span class="link pendente">
-        <span class="rotulo">Resultado da seleção</span>
-        <span class="nota">Divulgação em 28 de setembro</span>
+      <span class="link encerrado">
+        <span class="rotulo">Inscrições</span>
+        <span class="nota">Realizadas de 23 a 25 de setembro</span>
       </span>
       <span class="link pendente">
         <span class="rotulo">Declaração de conclusão</span>
-        <span class="nota">Para participantes aprovados, ao fim do curso</span>
+        <span class="nota">Para participantes aprovados, ao fim do curso em 18 de dezembro</span>
       </span>
     </nav>
   </section>
@@ -516,7 +556,7 @@
     <div class="creditos">
       <p>UNIVERSIDADE FEDERAL DE CAMPINA GRANDE<br>Centro de Humanidades<br>Unidade Acadêmica de Letras</p>
       <p>Elaborado por Hermes Levi — Servidor TAE</p>
-      <p>Atualizado em setembro de 2026.</p>
+      <p>Atualizado em outubro de 2026.</p>
     </div>
   </footer>
 
