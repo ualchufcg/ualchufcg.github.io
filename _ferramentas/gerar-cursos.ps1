@@ -81,7 +81,9 @@ function Card-Docente($nomeBruto) {
   [void]$sb.Append("          <ul class=""vias"">`n")
   [void]$sb.Append("            <li><a href=""https://sigaa.ufcg.edu.br/sigaa/public/docente/portal.jsf?siape=$siape"" target=""_blank"" rel=""noopener"">Perfil no SIGAA</a></li>`n")
   if ($urlLat) {
-    [void]$sb.Append("            <li><a href=""$(Esc $urlLat)"" target=""_blank"" rel=""noopener"">Lattes</a></li>`n")
+    # nem todo link e do Lattes: rotula conforme o destino
+    $rotulo = if ($urlLat -match 'lattes|cnpq') { 'Lattes' } else { 'Perfil' }
+    [void]$sb.Append("            <li><a href=""$(Esc $urlLat)"" target=""_blank"" rel=""noopener"">$rotulo</a></li>`n")
   } else {
     [void]$sb.Append("            <li><a href=""$buscaLattes"" target=""_blank"" rel=""noopener"" title=""Este docente não informou o Lattes no SIGAA"">Buscar no Lattes</a></li>`n")
   }
