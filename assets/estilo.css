@@ -29,13 +29,17 @@ body{
   line-height:1.45;
   -webkit-font-smoothing:antialiased;
 }
-.pagina{max-width:560px;margin:0 auto;padding:0 22px 60px}
+/* a .pagina nao tem recuo lateral: quem recua sao os filhos.
+   Assim a capa ocupa a largura toda sem margem negativa, que
+   estourava a tela em telas estreitas. */
+.pagina{max-width:560px;margin:0 auto;padding:0 0 60px}
+.pagina > section,
+.pagina > footer{padding-left:22px;padding-right:22px}
 
 /* ---------- capa do curso ---------- */
 .capa{
   background:var(--cor);
   color:#fff;
-  margin:0 -22px 0;
   padding:34px 22px 30px;
 }
 .capa .voltar{
