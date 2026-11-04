@@ -180,6 +180,8 @@ foreach ($c in $cursos) {
     <img src="$brasao" alt="">
     <div class="creditos">
       <p>UNIVERSIDADE FEDERAL DE CAMPINA GRANDE<br>Centro de Humanidades<br>Unidade Acadêmica de Letras</p>
+      <p>Elaborado por Hermes Levi — Servidor TAE</p>
+      <p>Atualizado em novembro de 2026.</p>
       <p><a href="../../">Voltar à página da UAL</a></p>
     </div>
   </footer>
