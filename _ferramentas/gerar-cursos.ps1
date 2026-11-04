@@ -1,0 +1,187 @@
+﻿# ---------------------------------------------------------------
+#  Gera uma pagina por curso a partir dos arquivos em \dados
+#  Uso:  powershell -ExecutionPolicy Bypass -File _ferramentas\gerar-cursos.ps1
+# ---------------------------------------------------------------
+$ErrorActionPreference = "Stop"
+$raiz = Split-Path -Parent $PSScriptRoot
+$utf8 = New-Object System.Text.UTF8Encoding($false)
+
+function Ler-Psv([string]$arquivo) {
+  Import-Csv -Path (Join-Path $raiz "dados\$arquivo") -Delimiter '|' -Encoding UTF8
+}
+function Esc([string]$t) {
+  if ($null -eq $t) { return "" }
+  $t.Replace('&','&amp;').Replace('<','&lt;').Replace('>','&gt;').Replace('"','&quot;')
+}
+function Capitalizar([string]$nome) {
+  $miudas = @('de','da','do','das','dos','e')
+  ($nome.ToLower() -split ' ' | ForEach-Object {
+     if ($miudas -contains $_) { $_ }
+     else { if ($_.Length -gt 0) { $_.Substring(0,1).ToUpper() + $_.Substring(1) } }
+   }) -join ' '
+}
+function Iniciais([string]$nome) {
+  $p = ($nome -split ' ') | Where-Object { $_.Length -gt 2 }
+  if ($p.Count -ge 2) { ($p[0][0] + $p[-1][0]).ToUpper() }
+  elseif ($p.Count -eq 1) { $p[0].Substring(0,1).ToUpper() }
+  else { "?" }
+}
+
+$cursos   = Ler-Psv 'cursos.psv'
+$nomes    = Ler-Psv 'docentes.psv'
+$vinculos = Ler-Psv 'docentes-por-curso.psv'
+$perfis   = Ler-Psv 'perfis-sigaa.psv'
+$emails   = Ler-Psv 'emails.psv'
+
+$siapePorNome   = @{}; foreach ($n in $nomes)  { $siapePorNome[$n.nome] = $n.siape }
+$perfilPorSiape = @{}; foreach ($p in $perfis) { $perfilPorSiape[$p.siape] = $p }
+$emailPorNome   = @{}; foreach ($e in $emails) { $emailPorNome[$e.nome] = $e.email }
+
+$buscaLattes = 'https://buscatextual.cnpq.br/buscatextual/busca.do?metodo=apresentar'
+
+# logo e brasao reaproveitados da pagina principal
+$indexAtual = Get-Content (Join-Path $raiz 'index.html') -Raw -Encoding UTF8
+$brasao = ([regex]'<img src="(data:image/png;base64,[^"]+)"').Match($indexAtual).Groups[1].Value
+
+function Card-Docente($nomeBruto) {
+  $siape  = $siapePorNome[$nomeBruto]
+  $perfil = $perfilPorSiape[$siape]
+  $nome   = Esc (Capitalizar $nomeBruto)
+  $sb = New-Object System.Text.StringBuilder
+
+  [void]$sb.Append("      <li class=""docente"">`n")
+  if ($perfil -and $perfil.foto) {
+    [void]$sb.Append("        <img class=""retrato"" src=""$(Esc $perfil.foto)"" alt="""" loading=""lazy"" referrerpolicy=""no-referrer"">`n")
+  } else {
+    [void]$sb.Append("        <div class=""semfoto"" aria-hidden=""true"">$(Iniciais $nomeBruto)</div>`n")
+  }
+  [void]$sb.Append("        <div class=""corpo"">`n")
+  [void]$sb.Append("          <p class=""nome"">$nome</p>`n")
+  if ($perfil -and $perfil.grau) {
+    [void]$sb.Append("          <span class=""grau"">$(Esc $perfil.grau)</span>`n")
+  }
+  if ($perfil -and $perfil.areas) {
+    [void]$sb.Append("          <p class=""areas"">$(Esc $perfil.areas)</p>`n")
+  }
+  [void]$sb.Append("          <ul class=""vias"">`n")
+  [void]$sb.Append("            <li><a href=""https://sigaa.ufcg.edu.br/sigaa/public/docente/portal.jsf?siape=$siape"" target=""_blank"" rel=""noopener"">Perfil no SIGAA</a></li>`n")
+  if ($perfil -and $perfil.lattes) {
+    [void]$sb.Append("            <li><a href=""$(Esc $perfil.lattes)"" target=""_blank"" rel=""noopener"">Lattes</a></li>`n")
+  } else {
+    [void]$sb.Append("            <li><a href=""$buscaLattes"" target=""_blank"" rel=""noopener"" title=""Este docente não informou o Lattes no SIGAA"">Buscar no Lattes</a></li>`n")
+  }
+  $mail = $emailPorNome[$nomeBruto]
+  if ($mail) {
+    [void]$sb.Append("            <li><a href=""mailto:$(Esc $mail)"">E-mail</a></li>`n")
+  }
+  [void]$sb.Append("          </ul>`n        </div>`n      </li>`n")
+  $sb.ToString()
+}
+
+$resumo = @()
+
+foreach ($c in $cursos) {
+  $docEf  = @($vinculos | Where-Object { $_.curso -eq $c.slug -and $_.vinculo -eq 'efetivo' }    | Sort-Object nome)
+  $docSub = @($vinculos | Where-Object { $_.curso -eq $c.slug -and $_.vinculo -eq 'substituto' } | Sort-Object nome)
+
+  $h = New-Object System.Text.StringBuilder
+  [void]$h.Append(@"
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>$(Esc $c.nome) ($(Esc $c.turno.ToLower())) · UAL/CH · UFCG</title>
+<meta name="description" content="$(Esc $c.nome) — $(Esc $c.turno.ToLower()). Estrutura curricular, Projeto Pedagogico, coordenacao e corpo docente. Unidade Acadêmica de Letras, UFCG.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/estilo.css">
+<style>
+  :root{--cor:$($c.cor);--cor-escura:$($c.corEscura);--cor-clara:$($c.corClara)}
+</style>
+</head>
+<body>
+
+<main class="pagina">
+
+  <div class="capa">
+    <a class="voltar" href="../../">&larr; Unidade Acadêmica de Letras</a>
+    <h1>$(Esc $c.nome)</h1>
+    <span class="turno">$(Esc $c.turno)</span>
+    <p class="unidade">Licenciatura &middot; Centro de Humanidades &middot; UFCG</p>
+  </div>
+
+  <section class="grupo">
+    <h2>Coordenação</h2>
+    <div class="ficha">
+      <p>Coordenação: $(Esc $c.coordenacao)<br>Secretaria da CGLET: Marciano Siqueira e Hermes Levi</p>
+      <ul>
+        <li><a href="mailto:gradletrasual@gmail.com">gradletrasual@gmail.com</a></li>
+        <li><a href="mailto:marciano.siqueira@tecnico.ufcg.edu.br">marciano.siqueira@tecnico.ufcg.edu.br</a></li>
+        <li><a href="mailto:hermes.levi@ufcg.edu.br">hermes.levi@ufcg.edu.br</a></li>
+        <li><a href="https://wa.me/558321011036" target="_blank" rel="noopener">(83) 2101-1036 &mdash; WhatsApp</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="grupo">
+    <h2>Documentos do curso</h2>
+    <nav class="links" aria-label="Documentos do curso">
+
+"@)
+  [void]$h.Append("      <a class=""link"" href=""../../$($c.fluxograma)"" target=""_blank"" rel=""noopener"">`n")
+  [void]$h.Append("        <span class=""rotulo"">Estrutura curricular e fluxograma</span>`n")
+  [void]$h.Append("        <span class=""nota"">Componentes por período e pré-requisitos</span>`n      </a>`n")
+  if ($c.ppc) {
+    [void]$h.Append("      <a class=""link"" href=""../../$($c.ppc)"" target=""_blank"" rel=""noopener"">`n")
+    [void]$h.Append("        <span class=""rotulo"">Projeto Pedagógico do Curso</span>`n")
+    [void]$h.Append("        <span class=""nota"">Concepção, objetivos, perfil do egresso e avaliação</span>`n      </a>`n")
+  } else {
+    [void]$h.Append("      <span class=""link pendente"">`n        <span class=""rotulo"">Projeto Pedagógico do Curso</span>`n        <span class=""nota"">Aguardando envio pela coordenacao</span>`n      </span>`n")
+  }
+  [void]$h.Append("    </nav>`n  </section>`n`n")
+
+  $total = $docEf.Count + $docSub.Count
+  [void]$h.Append("  <section class=""grupo"">`n    <h2>Corpo docente</h2>`n")
+  [void]$h.Append("    <p class=""aviso"">$total docentes &middot; dados do SIGAA, atualizados pelos próprios docentes</p>`n")
+
+  if ($docEf.Count) {
+    [void]$h.Append("    <h3 class=""subtitulo"">Efetivos<span>$($docEf.Count)</span></h3>`n    <ul class=""docentes"">`n")
+    foreach ($d in $docEf) { [void]$h.Append((Card-Docente $d.nome)) }
+    [void]$h.Append("    </ul>`n")
+  }
+  if ($docSub.Count) {
+    [void]$h.Append("    <h3 class=""subtitulo"">Substitutos<span>$($docSub.Count)</span></h3>`n    <ul class=""docentes"">`n")
+    foreach ($d in $docSub) { [void]$h.Append((Card-Docente $d.nome)) }
+    [void]$h.Append("    </ul>`n")
+  }
+  [void]$h.Append("  </section>`n`n")
+
+  [void]$h.Append(@"
+  <footer>
+    <img src="$brasao" alt="">
+    <div class="creditos">
+      <p>UNIVERSIDADE FEDERAL DE CAMPINA GRANDE<br>Centro de Humanidades<br>Unidade Acadêmica de Letras</p>
+      <p><a href="../../">Voltar à página da UAL</a></p>
+    </div>
+  </footer>
+
+</main>
+</body>
+</html>
+"@)
+
+  $pasta = Join-Path $raiz "cursos\$($c.slug)"
+  New-Item -ItemType Directory -Force -Path $pasta | Out-Null
+  [System.IO.File]::WriteAllText((Join-Path $pasta 'index.html'), $h.ToString(), $utf8)
+
+  $resumo += [pscustomobject]@{
+    Curso = $c.slug; Efetivos = $docEf.Count; Substitutos = $docSub.Count
+    Fotos = @($docEf + $docSub | Where-Object { $p = $perfilPorSiape[$siapePorNome[$_.nome]]; $p -and $p.foto }).Count
+    PPC = if ($c.ppc) { "sim" } else { "FALTA" }
+  }
+}
+
+$resumo | Format-Table -AutoSize
+Write-Output "paginas geradas em $raiz\cursos"
