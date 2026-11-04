@@ -92,7 +92,7 @@ foreach ($c in $cursos) {
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>$(Esc $c.nome) ($(Esc $c.turno.ToLower())) · UAL/CH · UFCG</title>
-<meta name="description" content="$(Esc $c.nome) — $(Esc $c.turno.ToLower()). Estrutura curricular, Projeto Pedagogico, coordenacao e corpo docente. Unidade Acadêmica de Letras, UFCG.">
+<meta name="description" content="$(Esc $c.nome) — $(Esc $c.turno.ToLower()). Estrutura curricular, Projeto Pedagógico, coordenação e corpo docente. Unidade Acadêmica de Letras, UFCG.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;900&display=swap" rel="stylesheet">
@@ -138,7 +138,7 @@ foreach ($c in $cursos) {
     [void]$h.Append("        <span class=""rotulo"">Projeto Pedagógico do Curso</span>`n")
     [void]$h.Append("        <span class=""nota"">Concepção, objetivos, perfil do egresso e avaliação</span>`n      </a>`n")
   } else {
-    [void]$h.Append("      <span class=""link pendente"">`n        <span class=""rotulo"">Projeto Pedagógico do Curso</span>`n        <span class=""nota"">Aguardando envio pela coordenacao</span>`n      </span>`n")
+    [void]$h.Append("      <span class=""link pendente"">`n        <span class=""rotulo"">Projeto Pedagógico do Curso</span>`n        <span class=""nota"">Aguardando envio pela coordenação</span>`n      </span>`n")
   }
   [void]$h.Append("    </nav>`n  </section>`n`n")
 
