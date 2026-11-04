@@ -22,7 +22,9 @@
 html{-webkit-text-size-adjust:100%}
 body{
   margin:0;
-  background:var(--papel);
+  /* o fundo recebe a cor do curso, bem diluída; a folha fica branca por cima */
+  background:var(--cor-clara);
+  background-attachment:fixed;
   color:var(--tinta);
   font-family:"Source Sans 3",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
   font-size:17px;
@@ -32,9 +34,31 @@ body{
 /* a .pagina nao tem recuo lateral: quem recua sao os filhos.
    Assim a capa ocupa a largura toda sem margem negativa, que
    estourava a tela em telas estreitas. */
-.pagina{max-width:560px;margin:0 auto;padding:0 0 60px}
+.pagina{
+  max-width:560px;
+  margin:0 auto;
+  padding:0 0 60px;
+  background:var(--papel);
+  box-shadow:0 0 0 1px rgba(12,12,26,.05), 0 20px 60px -28px rgba(12,12,26,.30);
+}
 .pagina > section,
 .pagina > footer{padding-left:22px;padding-right:22px}
+
+/* ---------- telas largas: aproveita o espaço lateral ---------- */
+@media (min-width:1000px){
+  body{padding:34px 0 50px}
+  .pagina{max-width:940px;border-radius:8px;overflow:hidden}
+  .pagina > section,
+  .pagina > footer{padding-left:46px;padding-right:46px}
+  .capa{padding:46px 46px 40px}
+  .capa h1{font-size:2.4rem}
+  /* os cards de docente passam a duas colunas */
+  .docentes{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
+  .docentes .docente{height:100%}
+}
+@media (min-width:1400px){
+  .docentes{grid-template-columns:1fr 1fr 1fr}
+}
 
 /* ---------- capa do curso ---------- */
 .capa{
