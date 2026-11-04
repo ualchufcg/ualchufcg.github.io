@@ -32,10 +32,19 @@ $nomes    = Ler-Psv 'docentes.psv'
 $vinculos = Ler-Psv 'docentes-por-curso.psv'
 $perfis   = Ler-Psv 'perfis-sigaa.psv'
 $emails   = Ler-Psv 'emails.psv'
+# perfis revisados pela coordenacao: tem precedencia sobre o SIGAA
+$lattesArq = Join-Path $raiz 'dados\perfis-lattes.psv'
+$lattes = if (Test-Path $lattesArq) { Ler-Psv 'perfis-lattes.psv' } else { @() }
 
 $siapePorNome   = @{}; foreach ($n in $nomes)  { $siapePorNome[$n.nome] = $n.siape }
 $perfilPorSiape = @{}; foreach ($p in $perfis) { $perfilPorSiape[$p.siape] = $p }
 $emailPorNome   = @{}; foreach ($e in $emails) { $emailPorNome[$e.nome] = $e.email }
+$lattesPorNome  = @{}; foreach ($l in $lattes) { $lattesPorNome[$l.nome] = $l }
+
+# pos-doutorado nao e titulacao: exibe Doutorado
+function Normaliza-Grau([string]$g) {
+  if ($g -match 'P.s-?doutor') { 'Doutorado' } else { $g }
+}
 
 $buscaLattes = 'https://buscatextual.cnpq.br/buscatextual/busca.do?metodo=apresentar'
 
@@ -55,18 +64,24 @@ function Card-Docente($nomeBruto) {
   } else {
     [void]$sb.Append("        <div class=""semfoto"" aria-hidden=""true"">$(Iniciais $nomeBruto)</div>`n")
   }
+  # a coordenacao tem precedencia; o SIGAA e a reserva
+  $rev    = $lattesPorNome[$nomeBruto]
+  $grau   = Normaliza-Grau $(if ($rev -and $rev.grau)   { $rev.grau }   elseif ($perfil) { $perfil.grau }   else { '' })
+  $texto  =                $(if ($rev -and $rev.resumo) { $rev.resumo } elseif ($perfil) { $perfil.areas } else { '' })
+  $urlLat =                $(if ($rev -and $rev.lattes) { $rev.lattes } elseif ($perfil) { $perfil.lattes } else { '' })
+
   [void]$sb.Append("        <div class=""corpo"">`n")
   [void]$sb.Append("          <p class=""nome"">$nome</p>`n")
-  if ($perfil -and $perfil.grau) {
-    [void]$sb.Append("          <span class=""grau"">$(Esc $perfil.grau)</span>`n")
+  if ($grau) {
+    [void]$sb.Append("          <span class=""grau"">$(Esc $grau)</span>`n")
   }
-  if ($perfil -and $perfil.areas) {
-    [void]$sb.Append("          <p class=""areas"">$(Esc $perfil.areas)</p>`n")
+  if ($texto) {
+    [void]$sb.Append("          <p class=""areas"">$(Esc $texto)</p>`n")
   }
   [void]$sb.Append("          <ul class=""vias"">`n")
   [void]$sb.Append("            <li><a href=""https://sigaa.ufcg.edu.br/sigaa/public/docente/portal.jsf?siape=$siape"" target=""_blank"" rel=""noopener"">Perfil no SIGAA</a></li>`n")
-  if ($perfil -and $perfil.lattes) {
-    [void]$sb.Append("            <li><a href=""$(Esc $perfil.lattes)"" target=""_blank"" rel=""noopener"">Lattes</a></li>`n")
+  if ($urlLat) {
+    [void]$sb.Append("            <li><a href=""$(Esc $urlLat)"" target=""_blank"" rel=""noopener"">Lattes</a></li>`n")
   } else {
     [void]$sb.Append("            <li><a href=""$buscaLattes"" target=""_blank"" rel=""noopener"" title=""Este docente não informou o Lattes no SIGAA"">Buscar no Lattes</a></li>`n")
   }
