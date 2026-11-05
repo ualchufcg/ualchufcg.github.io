@@ -55,9 +55,12 @@ $buscaLattes = 'https://buscatextual.cnpq.br/buscatextual/busca.do?metodo=aprese
 
 # logo e brasao reaproveitados da pagina principal
 $indexAtual = Get-Content (Join-Path $raiz 'index.html') -Raw -Encoding UTF8
-$brasao = ([regex]'<img src="(data:image/png;base64,[^"]+)"').Match($indexAtual).Groups[1].Value
+# o base64 pode estar em linha propria, logo o \s* depois do src="
+$brasao = ([regex]'<img src="\s*(data:image/png;base64,[^"]+)"').Match($indexAtual).Groups[1].Value.Trim()
 # logo da UAL, usada como selo na capa de cada curso
-$marca  = ([regex]'class="marca" src="(data:image/png;base64,[^"]+)"').Match($indexAtual).Groups[1].Value
+$marca  = ([regex]'class="selo"[^>]*src="\s*(data:image/png;base64,[^"]+)"').Match($indexAtual).Groups[1].Value.Trim()
+if (-not $marca)  { throw "Nao encontrei a logo (class=selo) no index.html. As paginas sairiam com a imagem quebrada." }
+if (-not $brasao) { throw "Nao encontrei o brasao no rodape do index.html." }
 
 # versao do CSS no link: muda quando a folha muda, para o navegador
 # do visitante nao ficar com o estilo antigo em cache
