@@ -52,49 +52,90 @@ body{
   .pagina > footer{padding-left:46px;padding-right:46px}
   .capa{padding:46px 46px 40px}
   .capa h1{font-size:2.4rem}
-  /* os cards de docente passam a duas colunas */
-  .docentes{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
-  .docentes .docente{height:100%}
-}
-@media (min-width:1400px){
-  .docentes{grid-template-columns:1fr 1fr 1fr}
 }
 
-/* ---------- capa do curso ---------- */
+/* ---------- capa do curso ----------
+   Estrutura inspirada nos guias informativos: selo da UAL em circulo
+   branco, "Licenciatura", o nome grande e o idioma numa faixa clara. */
 .capa{
   background:var(--cor);
   color:#fff;
-  padding:34px 22px 30px;
+  padding:26px 22px 26px;
+  text-align:center;
 }
 .capa .voltar{
   display:inline-block;
-  font-size:.82rem;
+  float:left;
+  font-size:.8rem;
   font-weight:600;
   color:#fff;
   text-decoration:none;
-  opacity:.9;
+  opacity:.92;
   border-bottom:1px solid rgba(255,255,255,.5);
 }
 .capa .voltar:hover{opacity:1}
-.capa h1{
-  margin:18px 0 0;
-  font-size:1.9rem;
-  line-height:1.1;
-  font-weight:900;
-  letter-spacing:-.02em;
+.capa .selo{
+  display:block;
+  clear:both;
+  width:118px;
+  height:118px;
+  margin:22px auto 0;
+  padding:13px;
+  background:#fff;
+  border-radius:50%;
+  object-fit:contain;
+  box-shadow:0 4px 16px rgba(0,0,0,.14);
 }
-.capa .turno{
-  display:inline-block;
-  margin-top:12px;
-  padding:3px 12px;
-  border:1.5px solid rgba(255,255,255,.6);
-  border-radius:999px;
+.capa .licenciatura{
+  margin:18px 0 0;
   font-size:.78rem;
   font-weight:700;
-  letter-spacing:.06em;
+  letter-spacing:.26em;
   text-transform:uppercase;
+  opacity:.94;
 }
-.capa .unidade{margin:14px 0 0;font-size:.88rem;opacity:.9}
+.capa h1{
+  margin:1px 0 0;
+  font-size:2.7rem;
+  line-height:1.02;
+  font-weight:900;
+  letter-spacing:-.03em;
+}
+/* borda irregular em SVG: o efeito de papel rasgado do guia,
+   sem virar imagem — escala em qualquer largura e pesa ~1 KB */
+.rasgo{
+  display:block;
+  width:calc(100% + 44px);
+  margin:16px -22px -1px;
+  height:12px;
+}
+.rasgo-fim{margin:-1px -22px 0;transform:scaleX(-1)}
+.faixa-curso{
+  margin:0 -22px;
+  padding:4px 22px 10px;
+  background:var(--papel);
+  color:var(--cor-escura);
+}
+.faixa-curso .idioma{
+  display:block;
+  font-size:1.16rem;
+  font-weight:800;
+  line-height:1.2;
+  letter-spacing:-.01em;
+}
+.faixa-curso .turno{
+  display:inline-block;
+  margin-top:7px;
+  padding:2px 11px;
+  border:1.5px solid var(--cor);
+  border-radius:999px;
+  font-size:.72rem;
+  font-weight:700;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--cor-escura);
+}
+.capa .unidade{margin:16px 0 0;font-size:.84rem;opacity:.9}
 
 /* ---------- blocos ---------- */
 .grupo{margin-top:32px;padding-top:26px;border-top:1px solid var(--linha)}
@@ -161,46 +202,63 @@ body{
   color:var(--tinta-suave);
   margin-left:6px;
 }
-.docentes{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
+/* ---------- grade de docentes ----------
+   Retrato em cima, plaquinha escura com o nome, dados abaixo. */
+.docentes{
+  list-style:none;padding:0;margin:0;
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(158px,1fr));
+  gap:12px;
+  align-items:start;
+}
 .docente{
-  display:flex;
-  gap:13px;
-  padding:12px;
+  display:flex;flex-direction:column;
+  padding:0;
   border:1px solid var(--linha);
   border-radius:6px;
+  overflow:hidden;
   background:#fff;
+  height:100%;
 }
 .docente .retrato{
-  flex:none;width:68px;height:68px;
-  border-radius:50%;
-  object-fit:cover;
+  display:block;width:100%;height:166px;
+  object-fit:cover;object-position:center 22%;
   background:var(--cor-clara);
-  border:2px solid var(--cor-clara);
+  border:0;border-radius:0;
 }
 .docente .semfoto{
-  flex:none;width:68px;height:68px;
-  border-radius:50%;
+  width:100%;height:166px;
   background:var(--cor-clara);
   color:var(--cor-escura);
   display:flex;align-items:center;justify-content:center;
-  font-size:1.2rem;font-weight:800;letter-spacing:.02em;
+  font-size:2.1rem;font-weight:800;letter-spacing:.03em;
 }
-.docente .corpo{min-width:0;flex:1}
+.docente .corpo{display:flex;flex-direction:column;flex:1;min-width:0}
 .docente .nome{
-  margin:0;font-size:1rem;font-weight:700;line-height:1.25;color:var(--tinta);
+  margin:0;
+  background:var(--cor-escura);color:#fff;
+  padding:8px 10px;
+  font-size:.84rem;font-weight:700;line-height:1.22;
 }
 .docente .grau{
-  display:inline-block;margin-top:4px;padding:1px 8px;
+  display:block;
   background:var(--cor-clara);color:var(--cor-escura);
-  border-radius:999px;font-size:.7rem;font-weight:700;
-  letter-spacing:.04em;text-transform:uppercase;
+  padding:3px 10px;
+  font-size:.64rem;font-weight:800;
+  letter-spacing:.1em;text-transform:uppercase;
 }
-.docente .areas{margin:6px 0 0;font-size:.82rem;color:var(--tinta-suave);line-height:1.35}
-.docente .vias{list-style:none;padding:0;margin:8px 0 0;display:flex;flex-wrap:wrap;gap:6px}
+.docente .areas{
+  margin:0;padding:8px 10px 0;
+  font-size:.74rem;color:var(--tinta-suave);line-height:1.32;
+}
+.docente .vias{
+  list-style:none;margin:auto 0 0;padding:9px 10px 10px;
+  display:flex;flex-wrap:wrap;gap:5px;
+}
 .docente .vias a{
-  display:inline-block;padding:3px 10px;
+  display:inline-block;padding:2px 8px;
   border:1px solid var(--linha);border-radius:999px;
-  font-size:.76rem;font-weight:600;
+  font-size:.7rem;font-weight:600;
   color:var(--cor-escura);text-decoration:none;
 }
 .docente .vias a:hover{border-color:var(--cor);background:var(--cor-clara)}

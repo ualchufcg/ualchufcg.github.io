@@ -51,6 +51,8 @@ $buscaLattes = 'https://buscatextual.cnpq.br/buscatextual/busca.do?metodo=aprese
 # logo e brasao reaproveitados da pagina principal
 $indexAtual = Get-Content (Join-Path $raiz 'index.html') -Raw -Encoding UTF8
 $brasao = ([regex]'<img src="(data:image/png;base64,[^"]+)"').Match($indexAtual).Groups[1].Value
+# logo da UAL, usada como selo na capa de cada curso
+$marca  = ([regex]'class="marca" src="(data:image/png;base64,[^"]+)"').Match($indexAtual).Groups[1].Value
 
 function Card-Docente($nomeBruto) {
   $siape  = $siapePorNome[$nomeBruto]
@@ -124,9 +126,20 @@ foreach ($c in $cursos) {
 
   <div class="capa">
     <a class="voltar" href="../../">&larr; Unidade Acadêmica de Letras</a>
-    <h1>$(Esc $c.nome)</h1>
-    <span class="turno">$(Esc $c.turno)</span>
-    <p class="unidade">Licenciatura &middot; Centro de Humanidades &middot; UFCG</p>
+    <img class="selo" src="$marca" alt="">
+    <p class="licenciatura">Licenciatura</p>
+    <h1>Letras</h1>
+    <svg class="rasgo" viewBox="0 0 300 12" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 12 L0 6.2 L9 4.1 L17 7.3 L26 3.4 L34 6.8 L43 2.9 L52 6.1 L60 3.2 L69 7.4 L78 4.3 L86 7.9 L95 3.6 L104 6.7 L112 2.8 L121 6.4 L130 3.9 L138 7.6 L147 4.2 L156 7.1 L164 3.3 L173 6.6 L182 2.7 L190 6.9 L199 4.4 L208 7.8 L216 3.5 L225 6.3 L234 2.6 L242 7.2 L251 4.6 L260 7.7 L268 3.8 L277 6.5 L286 2.9 L294 6.8 L300 4.7 L300 12 Z" fill="var(--papel)"/>
+    </svg>
+    <div class="faixa-curso">
+      <span class="idioma">$(Esc ($c.nome -replace '^Letras\s*(—|-)\s*','' -replace '^Letras\s+',''))</span>
+      <span class="turno">$(Esc $c.turno)</span>
+    </div>
+    <svg class="rasgo rasgo-fim" viewBox="0 0 300 12" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 0 L0 5.8 L9 7.9 L17 4.7 L26 8.6 L34 5.2 L43 9.1 L52 5.9 L60 8.8 L69 4.6 L78 7.7 L86 4.1 L95 8.4 L104 5.3 L112 9.2 L121 5.6 L130 8.1 L138 4.4 L147 7.8 L156 4.9 L164 8.7 L173 5.4 L182 9.3 L190 5.1 L199 7.6 L208 4.2 L216 8.5 L225 5.7 L234 9.4 L242 4.8 L251 7.4 L260 4.3 L268 8.2 L277 5.5 L286 9.1 L294 5.2 L300 7.3 L300 0 Z" fill="var(--papel)"/>
+    </svg>
+    <p class="unidade">Centro de Humanidades &middot; UFCG</p>
   </div>
 
   <section class="grupo">
