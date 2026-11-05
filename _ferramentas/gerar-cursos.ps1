@@ -54,6 +54,10 @@ $brasao = ([regex]'<img src="(data:image/png;base64,[^"]+)"').Match($indexAtual)
 # logo da UAL, usada como selo na capa de cada curso
 $marca  = ([regex]'class="marca" src="(data:image/png;base64,[^"]+)"').Match($indexAtual).Groups[1].Value
 
+# versao do CSS no link: muda quando a folha muda, para o navegador
+# do visitante nao ficar com o estilo antigo em cache
+$cssVer = (Get-Item (Join-Path $raiz 'assets\estilo.css')).LastWriteTimeUtc.ToString('yyyyMMddHHmmss')
+
 function Card-Docente($nomeBruto) {
   $siape  = $siapePorNome[$nomeBruto]
   $perfil = $perfilPorSiape[$siape]
@@ -115,7 +119,7 @@ foreach ($c in $cursos) {
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../assets/estilo.css">
+<link rel="stylesheet" href="../../assets/estilo.css?v=$cssVer">
 <style>
   :root{--cor:$($c.cor);--cor-escura:$($c.corEscura);--cor-clara:$($c.corClara)}
 </style>
