@@ -312,18 +312,16 @@ foreach ($c in $cursos) {
 
 "@)
 
-
-  $total = $docEf.Count + $docSub.Count
   [void]$h.Append("  <section class=""grupo"">`n    <h2>Corpo docente</h2>`n")
-  [void]$h.Append("    <p class=""aviso"">$total docentes &middot; dados do SIGAA, atualizados pelos próprios docentes</p>`n")
+  [void]$h.Append("    <p class=""aviso"">Dados do SIGAA, atualizados pelos próprios docentes</p>`n")
 
   if ($docEf.Count) {
-    [void]$h.Append("    <h3 class=""subtitulo"">Efetivos<span>$($docEf.Count)</span></h3>`n    <ul class=""docentes"">`n")
+    [void]$h.Append("    <h3 class=""subtitulo"">Efetivos</h3>`n    <ul class=""docentes"">`n")
     foreach ($d in $docEf) { [void]$h.Append((Card-Docente $d.nome)) }
     [void]$h.Append("    </ul>`n")
   }
   if ($docSub.Count) {
-    [void]$h.Append("    <h3 class=""subtitulo"">Substitutos<span>$($docSub.Count)</span></h3>`n    <ul class=""docentes"">`n")
+    [void]$h.Append("    <h3 class=""subtitulo"">Substitutos</h3>`n    <ul class=""docentes"">`n")
     foreach ($d in $docSub) { [void]$h.Append((Card-Docente $d.nome)) }
     [void]$h.Append("    </ul>`n")
   }

@@ -197,12 +197,6 @@ body{
   font-weight:700;
   color:var(--verde-livro);
 }
-.subtitulo span{
-  font-weight:600;
-  font-size:.8rem;
-  color:var(--tinta-suave);
-  margin-left:6px;
-}
 /* ---------- grade de docentes ----------
    Retrato em cima, plaquinha escura com o nome, dados abaixo. */
 .docentes{
