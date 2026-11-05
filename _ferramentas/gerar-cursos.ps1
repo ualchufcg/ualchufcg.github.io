@@ -189,6 +189,126 @@ foreach ($c in $cursos) {
   }
   [void]$h.Append("    </nav>`n  </section>`n`n")
 
+  # ---- blocos iguais em todos os cursos: estagio, TCC e normas gerais ----
+  [void]$h.Append(@"
+  <section class="grupo">
+    <h2>Estágio Supervisionado</h2>
+    <p class="aviso">Cadastro do estágio obrigatório junto à Coordenação de Graduação em Letras</p>
+    <nav class="links" aria-label="Estágio supervisionado">
+      <a class="link" href="../../arquivos/estagios/manual-de-cadastro-de-estagio.pdf" target="_blank" rel="noopener">
+        <span class="rotulo">Manual de cadastro</span>
+        <span class="nota">Passo a passo para registro do estágio</span>
+      </a>
+      <a class="link" href="../../arquivos/estagios/formulario-de-cadastro-de-estagio.pdf" target="_blank" rel="noopener">
+        <span class="rotulo">Formulário de sistematização das informações</span>
+        <span class="nota">Concedente, escola, horário e plano de aulas &middot; para preenchimento e entrega</span>
+      </a>
+    </nav>
+  </section>
+
+  <section class="grupo">
+    <h2>Defesa de Trabalho de Conclusão de Curso</h2>
+    <p class="aviso">Matrícula em monografia, indicação de orientador e defesa &middot; tramitação pelo SEI</p>
+    <div class="ficha">
+      <p>Conforme o art. 143 da Resolução CSE nº 11/2024, compete à Coordenação do curso a mediação entre discentes e orientadores. A tramitação é feita por via digital, no SEI, para maior eficiência administrativa.</p>
+    </div>
+    <p class="aviso">O pedido deve observar a data limite determinada pela Administração Executiva Colegiada da UAL/CH ou pela coordenação do curso. Depois dessa data não são realizadas matrículas em monografia.</p>
+
+    <h3>Fluxo de cadastramento e matrícula</h3>
+    <ol class="passos">
+      <li>
+        <b>Abertura do processo</b>
+        O discente abre no SEI um processo do tipo <i>Graduação: Trabalho de Conclusão de Curso (Matrícula/Indicação de Orientador)</i> e anexa o Formulário de Cadastro de Orientação Acadêmica preenchido e assinado.
+      </li>
+      <li>
+        <b>Efetivação da matrícula</b>
+        A matrícula em monografia é efetivada mediante pedido do próprio discente, nos termos do Regulamento de Ensino.
+      </li>
+      <li>
+        <b>Mudança de fase processual</b>
+        Depois da matrícula, a Coordenação altera o tipo do processo para <i>Graduação: Defesa de Trabalho de Conclusão de Curso</i>.
+      </li>
+      <li>
+        <b>Documentação pós-defesa</b>
+        Versão final do TCC acompanhada da folha de aprovação assinada pela banca e da ficha catalográfica.
+      </li>
+    </ol>
+
+    <h3>Ficha catalográfica</h3>
+    <p class="aviso">Solicitada à Biblioteca Central depois da defesa, antes do depósito do trabalho</p>
+    <ol class="passos">
+      <li>
+        <b>Solicitação</b>
+        Preencha o modelo de formulário e reúna o trabalho acadêmico completo, com a folha de aprovação datada e assinada pela banca examinadora &mdash; as assinaturas podem ser de próprio punho ou eletrônicas. Envie os dois arquivos para <a href="mailto:fichacatalografica@setor.ufcg.edu.br">fichacatalografica@setor.ufcg.edu.br</a>.
+      </li>
+      <li>
+        <b>Formatação</b>
+        Apresente o trabalho conforme a ABNT NBR 14724:2024. O documento de orientações traz o check-list dos elementos essenciais exigidos para o depósito na Biblioteca Digital de Teses e Dissertações (BDTD) da UFCG.
+      </li>
+      <li>
+        <b>Depósito na BDTD</b>
+        Abra no SEI um processo específico para o depósito, escolhendo entre <i>depósito autorizado</i>, em que o trabalho fica disponível à comunidade, e <i>depósito embargado</i>, com acesso restrito por três anos &mdash; usado quando há pedido de patente ou informações confidenciais.
+      </li>
+      <li>
+        <b>Depósito no SIGAA</b>
+        Procure a coordenação do curso para orientação quanto ao depósito do TCC no SIGAA.
+      </li>
+    </ol>
+    <div class="ficha">
+      <p>Biblioteca Central da UFCG</p>
+      <ul>
+        <li><a href="mailto:fichacatalografica@setor.ufcg.edu.br">fichacatalografica@setor.ufcg.edu.br</a> &middot; <a href="tel:+558321011098">(83) 2101-1098</a> (Setor de Referência)</li>
+        <li><a href="mailto:bibliotecacentral@setor.ufcg.edu.br">bibliotecacentral@setor.ufcg.edu.br</a> &middot; <a href="tel:+558321011090">(83) 2101-1090</a> &middot; <a href="tel:+558321011101">(83) 2101-1101</a></li>
+      </ul>
+    </div>
+
+    <h3>Documentos</h3>
+    <nav class="links" aria-label="Documentos da defesa de TCC">
+      <a class="link" href="../../arquivos/tcc/formulario-de-cadastro-de-orientacao-academica.docx" download>
+        <span class="rotulo">Formulário de cadastro de orientação acadêmica<span class="formato">DOCX</span></span>
+        <span class="nota">Anexo obrigatório na abertura do processo no SEI &middot; preencher e assinar</span>
+      </a>
+      <a class="link" href="../../arquivos/tcc/orientacoes-ficha-catalografica.pdf" target="_blank" rel="noopener">
+        <span class="rotulo">Orientações para a ficha catalográfica</span>
+        <span class="nota">Passos da solicitação, check-list da ABNT NBR 14724 e tutorial de depósito</span>
+      </a>
+      <a class="link" href="../../arquivos/tcc/modelo-de-formulario-para-solicitacao-de-ficha-catalografica.docx" download>
+        <span class="rotulo">Modelo de formulário para solicitação de ficha catalográfica<span class="formato">DOCX</span></span>
+        <span class="nota">Enviar preenchido à Biblioteca Central junto com o trabalho</span>
+      </a>
+    </nav>
+  </section>
+
+  <section class="grupo">
+    <h2>Normas e diretrizes</h2>
+    <p class="aviso">Normas da UFCG que alcançam todos os cursos de graduação da UAL/CH</p>
+    <nav class="links" aria-label="Normas e diretrizes">
+      <a class="link" href="../../arquivos/normas/resolucao-sods-09-2026-regulamento-de-ensino-titulo-vii.pdf" target="_blank" rel="noopener">
+        <span class="rotulo">Resolução SODS nº 09/2026</span>
+        <span class="nota">Atualiza o Título VII &mdash; Do Ingresso &mdash; do Regulamento de Ensino de Graduação</span>
+      </a>
+      <a class="link" href="../../arquivos/normas/instrucao-normativa-pre-01-2025-faltas-e-exercicios-domiciliares.pdf" target="_blank" rel="noopener">
+        <span class="rotulo">Instrução Normativa PRE nº 1/2025</span>
+        <span class="nota">Justificativa de faltas e regime de exercícios domiciliares &middot; documentos exigidos em cada situação</span>
+      </a>
+      <a class="link" href="../../arquivos/normas/portaria-pre-28-2025-antecipacao-de-estudos.pdf" target="_blank" rel="noopener">
+        <span class="rotulo">Portaria PRE nº 28/2025</span>
+        <span class="nota">Antecipação de estudos para abreviar a duração do período letivo</span>
+      </a>
+      <a class="link" href="../../arquivos/normas/resolucao-02-2023-politica-de-assistencia-estudantil.pdf" target="_blank" rel="noopener">
+        <span class="rotulo">Resolução nº 02/2023</span>
+        <span class="nota">Política de Assistência Estudantil da UFCG</span>
+      </a>
+      <a class="link" href="../../arquivos/normas/regimento-geral-ufcg.pdf" target="_blank" rel="noopener">
+        <span class="rotulo">Regimento Geral da UFCG</span>
+        <span class="nota">Estrutura, órgãos e competências da Universidade</span>
+      </a>
+    </nav>
+  </section>
+
+"@)
+
+
   $total = $docEf.Count + $docSub.Count
   [void]$h.Append("  <section class=""grupo"">`n    <h2>Corpo docente</h2>`n")
   [void]$h.Append("    <p class=""aviso"">$total docentes &middot; dados do SIGAA, atualizados pelos próprios docentes</p>`n")

@@ -149,6 +149,7 @@ body{
   color:var(--cor-escura);
 }
 .grupo .aviso{margin:-4px 0 12px;font-size:.8rem;color:var(--tinta-suave)}
+.grupo h3:not(.subtitulo){margin:22px 0 9px;font-size:.94rem;font-weight:700;color:var(--cor-escura)}
 
 .ficha{
   margin:0 0 4px;
@@ -264,6 +265,42 @@ body{
 .docente .vias a:hover{border-color:var(--cor);background:var(--cor-clara)}
 .docente .vias a:focus-visible{outline:2px solid var(--cor);outline-offset:2px}
 
+/* ---------- passos de um trâmite ----------
+   Lista numerada usada no fluxo de defesa de TCC. O número fica
+   num círculo na cor do curso, à esquerda do texto. */
+.passos{
+  list-style:none;
+  counter-reset:passo;
+  margin:0 0 14px;padding:0;
+}
+.passos li{
+  position:relative;
+  counter-increment:passo;
+  padding:0 0 13px 38px;
+  font-size:.86rem;
+  color:var(--tinta-suave);
+  line-height:1.4;
+}
+.passos li::before{
+  content:counter(passo);
+  position:absolute;left:0;top:0;
+  width:25px;height:25px;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--cor);color:#fff;
+  border-radius:50%;
+  font-size:.76rem;font-weight:800;
+}
+.passos b{display:block;color:var(--cor-escura);font-size:.92rem;margin-bottom:1px}
+.passos i{font-style:normal;color:var(--tinta);font-weight:600}
+.passos a{color:var(--cor-escura)}
+
+/* arquivo que o navegador baixa em vez de abrir */
+.rotulo .formato{
+  display:inline-block;margin-left:7px;padding:1px 6px;
+  border:1px solid var(--linha);border-radius:3px;
+  font-size:.62rem;font-weight:700;letter-spacing:.06em;
+  color:var(--tinta-suave);vertical-align:middle;
+}
 /* ---------- rodapé ---------- */
 footer{
   margin-top:38px;padding-top:20px;
