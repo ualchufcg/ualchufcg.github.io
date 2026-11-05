@@ -41,6 +41,11 @@ $perfilPorSiape = @{}; foreach ($p in $perfis) { $perfilPorSiape[$p.siape] = $p 
 $emailPorNome   = @{}; foreach ($e in $emails) { $emailPorNome[$e.nome] = $e.email }
 $lattesPorNome  = @{}; foreach ($l in $lattes) { $lattesPorNome[$l.nome] = $l }
 
+# fotos tiradas dos guias informativos, para quem nao tem foto no SIGAA
+$fotosArq = Join-Path $raiz 'dados\fotos.psv'
+$fotoPorNome = @{}
+if (Test-Path $fotosArq) { foreach ($f in (Ler-Psv 'fotos.psv')) { $fotoPorNome[$f.nome] = $f.arquivo } }
+
 # pos-doutorado nao e titulacao: exibe Doutorado
 function Normaliza-Grau([string]$g) {
   if ($g -match 'P.s-?doutor') { 'Doutorado' } else { $g }
@@ -64,8 +69,13 @@ function Card-Docente($nomeBruto) {
   $nome   = Esc (Capitalizar $nomeBruto)
   $sb = New-Object System.Text.StringBuilder
 
+  # foto do guia tem precedencia; depois a do SIGAA; por fim as iniciais
+  $fotoLocal = $fotoPorNome[$nomeBruto]
+
   [void]$sb.Append("      <li class=""docente"">`n")
-  if ($perfil -and $perfil.foto) {
+  if ($fotoLocal) {
+    [void]$sb.Append("        <img class=""retrato"" src=""../../$(Esc $fotoLocal)"" alt="""" loading=""lazy"">`n")
+  } elseif ($perfil -and $perfil.foto) {
     [void]$sb.Append("        <img class=""retrato"" src=""$(Esc $perfil.foto)"" alt="""" loading=""lazy"" referrerpolicy=""no-referrer"">`n")
   } else {
     [void]$sb.Append("        <div class=""semfoto"" aria-hidden=""true"">$(Iniciais $nomeBruto)</div>`n")
