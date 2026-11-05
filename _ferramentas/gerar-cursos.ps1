@@ -52,15 +52,13 @@ function Normaliza-Grau([string]$g) {
 }
 
 $buscaLattes = 'https://buscatextual.cnpq.br/buscatextual/busca.do?metodo=apresentar'
-
-# logo e brasao reaproveitados da pagina principal
-$indexAtual = Get-Content (Join-Path $raiz 'index.html') -Raw -Encoding UTF8
-# o base64 pode estar em linha propria, logo o \s* depois do src="
-$brasao = ([regex]'<img src="\s*(data:image/png;base64,[^"]+)"').Match($indexAtual).Groups[1].Value.Trim()
-# logo da UAL, usada como selo na capa de cada curso
-$marca  = ([regex]'class="selo"[^>]*src="\s*(data:image/png;base64,[^"]+)"').Match($indexAtual).Groups[1].Value.Trim()
-if (-not $marca)  { throw "Nao encontrei a logo (class=selo) no index.html. As paginas sairiam com a imagem quebrada." }
-if (-not $brasao) { throw "Nao encontrei o brasao no rodape do index.html." }
+# logo e brasao sao arquivos em assets/: as paginas de curso estao
+# dois niveis abaixo da raiz, dai o ../../
+$marca  = '../../assets/logo-ual.png'
+$brasao = '../../assets/brasao-ufcg.png'
+foreach ($img in @('assets\logo-ual.png','assets\brasao-ufcg.png')) {
+  if (-not (Test-Path (Join-Path $raiz $img))) { throw "Falta $img. As paginas sairiam com a imagem quebrada." }
+}
 
 # versao do CSS no link: muda quando a folha muda, para o navegador
 # do visitante nao ficar com o estilo antigo em cache

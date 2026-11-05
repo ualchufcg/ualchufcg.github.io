@@ -307,3 +307,32 @@ footer p{margin:0;font-size:.8rem;color:var(--tinta-suave);line-height:1.35}
 footer a{color:var(--cor-escura)}
 
 @media (prefers-reduced-motion:reduce){*{transition:none !important}}
+
+/* ---------- elementos vindos dos guias informativos ---------- */
+/* etiqueta preta que nomeia a secao, como no guia impresso */
+.tarja{
+  display:inline-block;
+  margin:0 0 13px;
+  padding:7px 20px;
+  background:#101014;color:#fff;
+  font-size:.84rem;font-weight:700;
+  letter-spacing:.22em;text-transform:uppercase;
+}
+/* foto de arquivo, ocupando a largura do bloco */
+.foto{margin:0 0 15px}
+.foto img{display:block;width:100%;height:auto;border-radius:3px}
+.foto figcaption{margin-top:7px;font-size:.74rem;color:var(--tinta-suave);line-height:1.35}
+/* retrato que acompanha um texto biografico */
+.perfil{margin:0 0 14px}
+.perfil img{display:block;width:100%;max-width:250px;height:auto;margin:0 auto;border-radius:3px}
+.perfil figcaption{margin-top:7px;font-size:.74rem;color:var(--tinta-suave);text-align:center;line-height:1.35}
+@media (min-width:620px){
+  .perfil{float:right;width:225px;margin:2px 0 14px 22px}
+  .perfil img{max-width:none}
+  .perfil figcaption{text-align:left}
+}
+/* texto corrido, mais longo que as notas dos links */
+.texto p{margin:0 0 11px;font-size:.92rem;line-height:1.55}
+.texto p:last-child{margin-bottom:0}
+.texto::after{content:"";display:block;clear:both}
+.texto b{color:var(--cor-escura)}
